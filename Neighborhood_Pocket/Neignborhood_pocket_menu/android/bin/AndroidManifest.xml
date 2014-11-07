@@ -1,0 +1,22 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="processing.test.neignborhood_pocket_menu">
+    <uses-sdk android:minSdkVersion="19"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <application android:debuggable="true" android:icon="@drawable/icon" android:label="Neignborhood_pocket_menu">
+        <activity android:name="edu.fau.neighborhoodpocket.Neignborhood_pocket_menu">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+                </intent-filter>
+                
+        </activity>
+        <activity android:name="edu.fau.neighborhoodpocket.MapTester"></activity>
+        <activity android:name="edu.fau.neighborhoodpocket.PoliceButton"></activity>
+        <activity android:name="edu.fau.neighborhoodpocket.EmergencyContactButton"></activity>
+       
+                
+    </application>
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+  <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
+</manifest>
