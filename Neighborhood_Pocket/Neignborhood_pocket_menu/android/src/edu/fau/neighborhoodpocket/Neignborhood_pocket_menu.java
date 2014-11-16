@@ -4,11 +4,13 @@ import ketai.sensors.KetaiLocation;
 import ketai.sensors.Location;
 import processing.core.PApplet;
 import processing.core.PFont;
+import processing.core.PImage;
 import android.content.Intent;
 
 public class Neignborhood_pocket_menu extends PApplet {
 
-
+//variable for images
+PImage img;
 
 //location variable
 KetaiLocation location;
@@ -37,6 +39,9 @@ int buttonColor; //color of the buttons
 //setup method that gets parameters for the screen ready
 public void setup(){
   orientation(PORTRAIT);
+  
+  //loading the image
+  img = loadImage("map_icon1.png");
  
   noStroke();
   location = new KetaiLocation(this);
@@ -88,7 +93,8 @@ public void draw(){
   fill(0xff030000);
   textFont(labelFont);
   text(labelReport, rectX1 + (rectWidth/2), rectY1 + (rectHeight/2));
-  text(labelMap, rectX2 + (rectWidth/2), rectY2 + (rectHeight/2));
+  //text(labelMap, rectX2 + (rectWidth/2), rectY2 + (rectHeight/2));
+  image(img,rectX2 + (rectWidth/2),rectY2 + (rectHeight/2),90,60);
   text(label911, rectX3 + (rectWidth/2), rectY3 + (rectHeight/2));
   text(labelEmergency, rectX4 + (rectWidth/2), rectY4 + (rectHeight/2));
 
@@ -101,7 +107,10 @@ public void mousePressed(){
   
   //checking for the coordinates of the buttons and giving the buttons funtionality
   if(mouseX >= rectX1 && mouseX <= rectX1 + rectWidth && mouseY >= rectY1 && mouseY <= rectY1 + rectHeight){
-    println("Button 1");
+	  Intent intent = new Intent(this, ReportMap.class);
+      intent.putExtra("latitude", latitude);
+      intent.putExtra ("longitude", longitude);
+      startActivity(intent);
     
   }
   

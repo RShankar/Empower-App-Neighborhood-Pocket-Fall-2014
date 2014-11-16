@@ -1,8 +1,35 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="processing.test.neignborhood_pocket_menu">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:versionCode="1" 
+    android:versionName="1.0" 
+    package="processing.test.neignborhood_pocket_menu">
+    
+    <uses-permission 
+        android:name="android.permission.INTERNET"/>
+    <uses-permission
+        android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission
+        android:name="android.permission.CALL_PHONE"/>
+    <uses-permission
+        android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission
+        android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission
+        android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission
+        android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
+    
     <uses-sdk android:minSdkVersion="19"/>
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <application android:debuggable="true" android:icon="@drawable/icon" android:label="Neignborhood_pocket_menu">
+    
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true"/>
+    
+    <application 
+         
+        android:icon="@drawable/icon" 
+        android:label="Neignborhood_pocket_menu">
         <activity android:name="edu.fau.neighborhoodpocket.Neignborhood_pocket_menu">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -13,10 +40,15 @@
         <activity android:name="edu.fau.neighborhoodpocket.MapTester"></activity>
         <activity android:name="edu.fau.neighborhoodpocket.PoliceButton"></activity>
         <activity android:name="edu.fau.neighborhoodpocket.EmergencyContactButton"></activity>
+        
+        <meta-data android:name="com.google.android.gms.version"
+        android:value="@integer/google_play_services_version" />
+        
+        <meta-data
+    	android:name="com.google.android.maps.v2.API_KEY"
+    	android:value="AIzaSyDt-9gzwTNWPlUe7rzXzyOFTsczs9FRFcw"/>
+        <activity android:name="edu.fau.neighborhoodpocket.ReportMap"></activity>
        
                 
     </application>
-  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-  <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
 </manifest>
