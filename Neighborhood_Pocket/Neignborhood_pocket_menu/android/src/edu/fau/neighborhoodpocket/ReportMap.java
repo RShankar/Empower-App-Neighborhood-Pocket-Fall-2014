@@ -2,6 +2,7 @@ package edu.fau.neighborhoodpocket;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -15,7 +16,7 @@ public class ReportMap extends MapTester {
 	//marker variable
 	private Marker mark;
 	//variable to maintain camera positionm
-	private CameraPosition cp;
+	private CameraPosition cp = null;
 	
 	
 	@Override
@@ -32,12 +33,10 @@ public class ReportMap extends MapTester {
 		// TODO Auto-generated method stub
 		super.onResume();
 		if(cp != null){
+			Toast.makeText(getApplicationContext(), "inside cp not being null", 0).show();
 			map.moveCamera(CameraUpdateFactory.newCameraPosition(cp));
 			cp = null;
-		}
-		
-		
-				
+		}	
 	}
 	
 	//save on Pause()
@@ -45,8 +44,9 @@ public class ReportMap extends MapTester {
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
-		//saving the current preferences
+		//saving the current camera position
 		cp = map.getCameraPosition();
+		map = null;
 	}
 	
 	
@@ -69,7 +69,8 @@ public class ReportMap extends MapTester {
 				return true;
 			}
 			
-		});	
+		});
+		
 	}
 	
 	
