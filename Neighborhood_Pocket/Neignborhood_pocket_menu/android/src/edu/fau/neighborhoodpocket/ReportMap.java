@@ -1,8 +1,6 @@
 package edu.fau.neighborhoodpocket;
 
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.content.Context;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -13,7 +11,9 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class ReportMap extends MapTester {
+import edu.fau.neighborhoodpocket.DescriptionDialog.Communicator;
+
+public class ReportMap extends MapTester implements Communicator {
 	
 	//marker variable
 	private Marker mark;
@@ -26,6 +26,7 @@ public class ReportMap extends MapTester {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		initMap();
+		showDialog();
 	}
 	
 	
@@ -72,10 +73,22 @@ public class ReportMap extends MapTester {
 			}
 			
 		});
-		
+	
 	}
 	
-	
+	public void showDialog(){
+		FragmentManager manager = getFragmentManager();
+		DescriptionDialog dialog = new DescriptionDialog();
+		dialog.show(manager, "testDialog");
+	}
+
+
+
+	@Override
+	public void onDialogMessage(String message) {
+		// TODO Auto-generated method stub
+		Toast.makeText(getApplicationContext(), message, 0).show();
+	}
 	
 
 }

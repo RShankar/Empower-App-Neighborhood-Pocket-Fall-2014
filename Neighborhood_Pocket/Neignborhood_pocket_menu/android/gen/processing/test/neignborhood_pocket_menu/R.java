@@ -1482,7 +1482,7 @@ containing a value of this type.
         public static final int end=0x7f0b002a;
         public static final int expand_activities_button=0x7f0b0038;
         public static final int expanded_menu=0x7f0b003e;
-        public static final int fragment1=0x7f0b004f;
+        public static final int fragment1=0x7f0b0053;
         public static final int grayscale=0x7f0b0018;
         public static final int holo_dark=0x7f0b000b;
         public static final int holo_light=0x7f0b000c;
@@ -1493,13 +1493,14 @@ containing a value of this type.
         public static final int ifRoom=0x7f0b0024;
         public static final int image=0x7f0b0039;
         public static final int listMode=0x7f0b001a;
-        public static final int listView1=0x7f0b0050;
+        public static final int listView1=0x7f0b0054;
         public static final int list_item=0x7f0b003b;
         public static final int map=0x7f0b004e;
         public static final int match_parent=0x7f0b0012;
         public static final int middle=0x7f0b002b;
         public static final int monochrome=0x7f0b0019;
         public static final int never=0x7f0b0025;
+        public static final int noButton=0x7f0b0051;
         public static final int none=0x7f0b0007;
         public static final int normal=0x7f0b0008;
         public static final int production=0x7f0b000d;
@@ -1528,12 +1529,15 @@ containing a value of this type.
         public static final int submit_area=0x7f0b004b;
         public static final int tabMode=0x7f0b001b;
         public static final int terrain=0x7f0b000a;
+        public static final int textView1=0x7f0b004f;
+        public static final int textView2=0x7f0b0050;
         public static final int title=0x7f0b003d;
         public static final int top_action_bar=0x7f0b0032;
         public static final int up=0x7f0b0033;
         public static final int useLogo=0x7f0b0021;
         public static final int withText=0x7f0b0026;
         public static final int wrap_content=0x7f0b0013;
+        public static final int yesButton=0x7f0b0052;
     }
     public static final class integer {
         /**  The maximum number of action buttons that should be permitted within
@@ -1587,9 +1591,11 @@ containing a value of this type.
         public static final int abc_search_view=0x7f030016;
         public static final int abc_simple_decor=0x7f030017;
         public static final int activity_main=0x7f030018;
-        public static final int main=0x7f030019;
-        public static final int map=0x7f03001a;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001b;
+        public static final int anonymous_dialog=0x7f030019;
+        public static final int firstpromptdialog=0x7f03001a;
+        public static final int main=0x7f03001b;
+        public static final int map=0x7f03001c;
+        public static final int support_simple_spinner_dropdown_item=0x7f03001d;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
