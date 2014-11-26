@@ -1,41 +1,46 @@
 package edu.fau.neighborhoodpocket;
 
-import processing.test.neignborhood_pocket_menu.R;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
 
-public class AnonymousAddDialog extends DialogFragment implements OnClickListener{
-	
-private Button yesButton, noButton;
+public class AnonymousAddDialog extends DescriptionDialog{
 	
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		View v = inflater.inflate(R.layout.anonymous_dialog, null);
-		yesButton = (Button)v.findViewById(R.id.yesButton);
-		noButton = (Button)v.findViewById(R.id.noButton);
-		yesButton.setOnClickListener(this);
-		noButton.setOnClickListener(this);
-		return v;
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		builder.setTitle("Neighborhood Pocket");
+		builder.setMessage("Suspicious Activity will be added!");
+		builder.setMessage("Are you sure you want to add?");
+		builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				communicator.onDialogMessage("cancel was clicked");
+				dismiss();			
+			}
+		}); 
+		
+		builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				communicator.onDialogMessage("submit button was clicked");
+				dismiss();
+			}
+		});
+		
+		Dialog dialog = builder.create();
+		return dialog;
 	}
-
-	@Override
-	public void onClick(View v){ 
-		// TODO Auto-generated method stub
-		if(v.getId()==R.id.yesButton){
-			dismiss();
-			Toast.makeText(getActivity(), "yes button clicked", 0).show();
-		}
-		else if(v.getId()==R.id.noButton){
-			dismiss();
-			Toast.makeText(getActivity(), "no button clicked", 0).show();
-		}
+	
+	//interface that will allow for inter-fragment communication 
+	interface Communicator{
+		public void onDialogMessage(String message);
 	}
 
 
