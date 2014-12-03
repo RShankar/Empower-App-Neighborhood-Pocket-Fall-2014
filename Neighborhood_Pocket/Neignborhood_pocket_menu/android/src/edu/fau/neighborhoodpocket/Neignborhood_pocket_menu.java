@@ -1,5 +1,7 @@
 package edu.fau.neighborhoodpocket;
 
+import java.util.ArrayList;
+
 import ketai.sensors.KetaiLocation;
 import ketai.sensors.Location;
 import processing.core.PApplet;
@@ -11,6 +13,9 @@ public class Neignborhood_pocket_menu extends PApplet {
 
 	//variable for images
 	PImage img, img2, img3, img4;
+	
+	//persistance variable
+	ArrayList<String> listItems = new ArrayList<String>();
 
 	//location variable
 	KetaiLocation location;
@@ -98,7 +103,7 @@ public class Neignborhood_pocket_menu extends PApplet {
 	  fill(0xff030000);
 	  textFont(labelFont);
 	  
-	 
+	  //placing the images on the main menu
 	  image(img2, (float)(rectX1 + (rectWidth/2.75)), rectY1 ,(float)(displayWidth/5.4),(float)(displayHeight/10)); //report icon image 
 	 
 	  image(img,(float)(rectX2 + (rectWidth/2.75)),rectY2, (float)(displayWidth/5.4), (float)(displayHeight/7.7)); //,200,250);
@@ -119,6 +124,7 @@ public void mousePressed(){
 	  Intent intent = new Intent(this, ReportMap.class);
       intent.putExtra("latitude", latitude);
       intent.putExtra ("longitude", longitude);
+      intent.putExtra("listItems", listItems);
       startActivity(intent);
     
   }
@@ -129,6 +135,7 @@ public void mousePressed(){
     Intent intent = new Intent(this, MapTester.class);
     intent.putExtra("latitude", latitude);
     intent.putExtra ("longitude", longitude);
+    intent.putExtra("listItems", listItems);
     startActivity(intent);
     
   }

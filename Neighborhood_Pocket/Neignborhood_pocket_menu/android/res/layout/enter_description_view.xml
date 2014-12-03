@@ -18,24 +18,24 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/descriptionText1"
         android:layout_below="@+id/descriptionText1"
-        android:layout_marginTop="20dp"
-        android:text="Cancel" />
-
-    <Button
-        android:id="@+id/pictureButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/cancelButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="17dp"
-        android:text="Take Picture" />
+        android:layout_marginTop="64dp"
+        android:text="@string/cancel" />
 
     <Button
         android:id="@+id/submitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/pictureButton"
+        android:layout_alignBaseline="@+id/cancelButton"
+        android:layout_alignBottom="@+id/cancelButton"
         android:layout_alignRight="@+id/descriptionText1"
-        android:text="Submit" />
+        android:text="@string/submit" />
+
+    <Button
+        android:id="@+id/pictureButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/submitButton"
+        android:layout_centerHorizontal="true"
+        android:text="@string/picture" />
 
 </RelativeLayout>

@@ -1497,7 +1497,7 @@ containing a value of this type.
         public static final int end=0x7f0b002a;
         public static final int expand_activities_button=0x7f0b0038;
         public static final int expanded_menu=0x7f0b003e;
-        public static final int fragment1=0x7f0b0057;
+        public static final int fragment1=0x7f0b0059;
         public static final int grayscale=0x7f0b0018;
         public static final int holo_dark=0x7f0b000b;
         public static final int holo_light=0x7f0b000c;
@@ -1507,8 +1507,9 @@ containing a value of this type.
         public static final int icon=0x7f0b003c;
         public static final int ifRoom=0x7f0b0024;
         public static final int image=0x7f0b0039;
+        public static final int img=0x7f0b0057;
         public static final int listMode=0x7f0b001a;
-        public static final int listView1=0x7f0b0058;
+        public static final int listView1=0x7f0b005a;
         public static final int list_item=0x7f0b003b;
         public static final int map=0x7f0b004e;
         public static final int match_parent=0x7f0b0012;
@@ -1518,7 +1519,7 @@ containing a value of this type.
         public static final int noButton=0x7f0b0051;
         public static final int none=0x7f0b0007;
         public static final int normal=0x7f0b0008;
-        public static final int pictureButton=0x7f0b0055;
+        public static final int pictureButton=0x7f0b0056;
         public static final int production=0x7f0b000d;
         public static final int progress_circular=0x7f0b0004;
         public static final int progress_horizontal=0x7f0b0005;
@@ -1542,7 +1543,7 @@ containing a value of this type.
         public static final int showTitle=0x7f0b0020;
         public static final int split_action_bar=0x7f0b0030;
         public static final int strict_sandbox=0x7f0b000f;
-        public static final int submitButton=0x7f0b0056;
+        public static final int submitButton=0x7f0b0055;
         public static final int submit_area=0x7f0b004b;
         public static final int tabMode=0x7f0b001b;
         public static final int terrain=0x7f0b000a;
@@ -1550,6 +1551,7 @@ containing a value of this type.
         public static final int textView2=0x7f0b0050;
         public static final int title=0x7f0b003d;
         public static final int top_action_bar=0x7f0b0032;
+        public static final int txt=0x7f0b0058;
         public static final int up=0x7f0b0033;
         public static final int useLogo=0x7f0b0021;
         public static final int withText=0x7f0b0026;
@@ -1610,9 +1612,10 @@ containing a value of this type.
         public static final int activity_main=0x7f030018;
         public static final int anonymous_dialog=0x7f030019;
         public static final int enter_description_view=0x7f03001a;
-        public static final int main=0x7f03001b;
-        public static final int map=0x7f03001c;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001d;
+        public static final int list_single=0x7f03001b;
+        public static final int main=0x7f03001c;
+        public static final int map=0x7f03001d;
+        public static final int support_simple_spinner_dropdown_item=0x7f03001e;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -1655,6 +1658,7 @@ containing a value of this type.
         /**  Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
          */
         public static final int abc_shareactionprovider_share_with_application=0x7f070025;
+        public static final int cancel=0x7f070027;
         /**  Button in confirmation dialog to enable Google Play services.  Clicking it
         will direct user to application settings of Google Play services where they
         can enable it [CHAR LIMIT=40] 
@@ -1744,6 +1748,8 @@ containing a value of this type.
         /**  Long form sign-in button text [CHAR LIMIT=30] 
          */
         public static final int common_signin_button_text_long=0x7f070018;
+        public static final int picture=0x7f070028;
+        public static final int submit=0x7f070029;
         /**  Text on a placeholder buy button when Google Play services is not
          available or up-to-date 
          */

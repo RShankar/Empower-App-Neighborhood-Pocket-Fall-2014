@@ -366,7 +366,7 @@ int id edit_query 0x7f0b0042
 int id end 0x7f0b002a
 int id expand_activities_button 0x7f0b0038
 int id expanded_menu 0x7f0b003e
-int id fragment1 0x7f0b0057
+int id fragment1 0x7f0b0059
 int id grayscale 0x7f0b0018
 int id holo_dark 0x7f0b000b
 int id holo_light 0x7f0b000c
@@ -376,8 +376,9 @@ int id hybrid 0x7f0b0006
 int id icon 0x7f0b003c
 int id ifRoom 0x7f0b0024
 int id image 0x7f0b0039
+int id img 0x7f0b0057
 int id listMode 0x7f0b001a
-int id listView1 0x7f0b0058
+int id listView1 0x7f0b005a
 int id list_item 0x7f0b003b
 int id map 0x7f0b004e
 int id match_parent 0x7f0b0012
@@ -387,7 +388,7 @@ int id never 0x7f0b0025
 int id noButton 0x7f0b0051
 int id none 0x7f0b0007
 int id normal 0x7f0b0008
-int id pictureButton 0x7f0b0055
+int id pictureButton 0x7f0b0056
 int id production 0x7f0b000d
 int id progress_circular 0x7f0b0004
 int id progress_horizontal 0x7f0b0005
@@ -411,7 +412,7 @@ int id showHome 0x7f0b001f
 int id showTitle 0x7f0b0020
 int id split_action_bar 0x7f0b0030
 int id strict_sandbox 0x7f0b000f
-int id submitButton 0x7f0b0056
+int id submitButton 0x7f0b0055
 int id submit_area 0x7f0b004b
 int id tabMode 0x7f0b001b
 int id terrain 0x7f0b000a
@@ -419,6 +420,7 @@ int id textView1 0x7f0b004f
 int id textView2 0x7f0b0050
 int id title 0x7f0b003d
 int id top_action_bar 0x7f0b0032
+int id txt 0x7f0b0058
 int id up 0x7f0b0033
 int id useLogo 0x7f0b0021
 int id withText 0x7f0b0026
@@ -453,9 +455,10 @@ int layout abc_simple_decor 0x7f030017
 int layout activity_main 0x7f030018
 int layout anonymous_dialog 0x7f030019
 int layout enter_description_view 0x7f03001a
-int layout main 0x7f03001b
-int layout map 0x7f03001c
-int layout support_simple_spinner_dropdown_item 0x7f03001d
+int layout list_single 0x7f03001b
+int layout main 0x7f03001c
+int layout map 0x7f03001d
+int layout support_simple_spinner_dropdown_item 0x7f03001e
 int string abc_action_bar_home_description 0x7f07001b
 int string abc_action_bar_up_description 0x7f07001c
 int string abc_action_menu_overflow_description 0x7f07001d
@@ -469,6 +472,7 @@ int string abc_searchview_description_submit 0x7f070021
 int string abc_searchview_description_voice 0x7f070022
 int string abc_shareactionprovider_share_with 0x7f070026
 int string abc_shareactionprovider_share_with_application 0x7f070025
+int string cancel 0x7f070027
 int string common_google_play_services_enable_button 0x7f07000b
 int string common_google_play_services_enable_text 0x7f07000a
 int string common_google_play_services_enable_title 0x7f070009
@@ -494,6 +498,8 @@ int string common_google_play_services_update_text 0x7f07000d
 int string common_google_play_services_update_title 0x7f07000c
 int string common_signin_button_text 0x7f070017
 int string common_signin_button_text_long 0x7f070018
+int string picture 0x7f070028
+int string submit 0x7f070029
 int string wallet_buy_button_place_holder 0x7f070019
 int style TextAppearance_AppCompat_Base_CompactMenu_Dialog 0x7f050068
 int style TextAppearance_AppCompat_Base_SearchResult 0x7f050072
