@@ -56,6 +56,7 @@
     	android:name="com.google.android.maps.v2.API_KEY"
     	android:value="AIzaSyDt-9gzwTNWPlUe7rzXzyOFTsczs9FRFcw"/>
         <activity android:name="edu.fau.neighborhoodpocket.ReportMap"></activity>
+        <activity android:name="edu.fau.neighborhoodpocket.ActivityDisplay"></activity>
        
                 
     </application>

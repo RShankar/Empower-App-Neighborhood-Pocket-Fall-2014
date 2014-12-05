@@ -10,18 +10,16 @@ import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.EditText;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerDragListener;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -29,9 +27,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class ReportMap extends MapTester implements OnMarkerDragListener {
 	
-	//marker variable
+	//marker variable that will be draggable
 	private Marker mark;
-	//variable to maintain camera positionm
 	private String userResponse = null;
 	private LatLng newPosition;
 	
@@ -42,29 +39,11 @@ public class ReportMap extends MapTester implements OnMarkerDragListener {
 		super.onCreate(savedInstanceState);
 		showDialog();
 		newPosition = initialLocation;
-	}
+	}	
 	
-	
-	
-	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-		if(userResponse != null)
-			initMapMarker();
-			
-	}
-	
-	//save on Pause()
-	@Override
-	protected void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
-	
-	}
-	
-	
-	
+	/**
+	 * Method that will place a marker on the map at the user's current position
+	 */
 	private void initMapMarker() {
 		// TODO Auto-generated method stub
 		//moving the camera to the location of the user
@@ -72,21 +51,12 @@ public class ReportMap extends MapTester implements OnMarkerDragListener {
 		map.animateCamera(initialUpdate);
 		//initializing marker and allowing it to be draggable
 		mark = map.addMarker(new MarkerOptions().position(newPosition).draggable(true));
-		newsFeedAdapter.add("test for report map");
-		//setting up the mark event listener
-		map.setOnMarkerClickListener(new OnMarkerClickListener(){
-
-			@Override
-			public boolean onMarkerClick(Marker marker) {
-				// TODO Auto-generated method stub
-				LatLng newPosition = mark.getPosition();
-				newsFeedAdapter.add("Latitude: " + newPosition.latitude + " " + "Longitude: " + newPosition.longitude);
-				return true;
-			}
-		});
 		map.setOnMarkerDragListener(this);
 	}
 	
+	/**
+	 * method that will show the dialog windows to interact with
+	 */
 	public void showDialog(){
 		FragmentManager manager = getFragmentManager();
 		DescriptionDialog dialog = new DescriptionDialog();
@@ -107,6 +77,8 @@ public class ReportMap extends MapTester implements OnMarkerDragListener {
 		newPosition = marker.getPosition();
 		mark = marker;
 		
+		//setting the new position of the newly dragged marker to the correct suspcious activity
+		activityMap.get(activityMap.size()-1).setPosition(newPosition);
 	}
 
 	@Override
@@ -118,18 +90,28 @@ public class ReportMap extends MapTester implements OnMarkerDragListener {
 	@Override
 	public void onDialogMessage(String message) {
 		// TODO Auto-generated method stub
-		userResponse = message;
-		
+		userResponse = message;	
 	}
+	
 	//inner class
+	/**
+	 * This class contains all the code for the first Dialog screen seen when the user 
+	 * first clicks on the Report button from the menu screen.
+	 * This class inherits from DialogFragment
+	 * @author Joey
+	 *
+	 */
 	public class DescriptionDialog extends DialogFragment {
 		
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
-			// TODO Auto-generated method stub
+			//using the Alert Dialog class to build the dialog
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setTitle("Neighborhood Pocket");
 			builder.setMessage("Would you like to enter a description?");
+			
+			//setting the action if the user clicks they dont want to enter a description
+			//for the activity they want to report
 			builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
 				
 				@Override
@@ -141,6 +123,7 @@ public class ReportMap extends MapTester implements OnMarkerDragListener {
 				}
 			}); 
 			
+			//setting up the next dialog to be seen if the user want enter a description
 			builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 				
 				@Override
@@ -155,20 +138,20 @@ public class ReportMap extends MapTester implements OnMarkerDragListener {
 			
 			Dialog dialog = builder.create();
 			return dialog;
-		}
-		
-		//interface that will allow for inter-fragment communication 
-		/*interface Communicator{
-			public void onDialogMessage(String message);
-		}*/
-	
+		}	
 	}
-	//inner class to create that creates the dialog to indicate an anonmouyous report
+
+	/**
+	 * This class provides the code for the dialog that appears when the
+	 * user wants to make an anonymous post.
+	 * This class inherits from DescriptionDialog class
+	 * @author Joey
+	 *
+	 */
 	public class AnonymousAddDialog extends DescriptionDialog{
 		
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
-			// TODO Auto-generated method stub
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setTitle("Neighborhood Pocket");
 			builder.setMessage("Suspicious Activity without a description will be added!\n" + "Are you sure you want to add?");
@@ -186,9 +169,12 @@ public class ReportMap extends MapTester implements OnMarkerDragListener {
 				public void onClick(DialogInterface dialog, int which) {
 					dismiss();
 					Calendar c = Calendar.getInstance();
-					String s = "Suspicious Activity Reported at " +c.getTime() + " on " + c.get(Calendar.DAY_OF_WEEK);					
+					//adding a new SuspiciousActivity	
+					SuspiciousActivity act = new SuspiciousActivity(getApplicationContext(), newPosition);
 					initMapMarker();
-					newsFeedAdapter.add(s);
+					activityMap.put(newsFeedAdapter.getCount(), act);
+					newsFeedAdapter.add(act.getTitle());
+					
 				}
 			});
 			
@@ -198,16 +184,19 @@ public class ReportMap extends MapTester implements OnMarkerDragListener {
 		
 	}
 	
-	//inner class for the last dialog screen
+	/**
+	 * This is the class that implements the code for the dialog that the user can enter 
+	 * a custom description of the custom activity
+	 * @author Joey
+	 *
+	 */
 	public class DescriptionTextDialog extends DialogFragment{
 		private Button submitButton, cancelButton, pictureButton;
 		protected static final int RESULT_OK = -1;
 		protected static final int RESULT_CANCELED = 0;
 		static final int REQUEST_IMAGE_CAPTURE = 1;
-		private static final int REQUEST_TAKE_PHOTO = 1;
-		private String mCurrentPath;
-		private Uri fileUri;
-		private ImageView mImageView;
+		private EditText userText;
+		protected SuspiciousActivity activity = new SuspiciousActivity(getApplicationContext(), newPosition);
 
 		
 		@Override
@@ -221,7 +210,33 @@ public class ReportMap extends MapTester implements OnMarkerDragListener {
 			builder.setMessage("Enter Description");
 			final Dialog dialog = builder.create();
 			dialog.show();
+			
+			//setting up the code to handle the EditText component where the user will enter the description
+			userText = (EditText)view.findViewById(R.id.descriptionText1);
+			
+			//setting up the buttons on Description Dialog
+			//what happens when the submit button is clicked
 			submitButton = (Button)view.findViewById(R.id.submitButton);
+			submitButton.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					//only add a description if the user changes it, if not then it 
+					//will be the standard response
+					userResponse = userText.getText().toString();
+					if(!userResponse.isEmpty() && userResponse != null)
+						activity.setDescription(userResponse);
+					
+					//adding the new suspicious activity to the hashmap
+					activityMap.put(newsFeedAdapter.getCount(), activity);
+					//adding new suspicious activity to the listView
+					newsFeedAdapter.add(activity.getTitle());
+					initMapMarker();
+					dialog.dismiss();
+				}
+			});
+			
+			//this is what happens when the cancel button is clicked
 			cancelButton = (Button)view.findViewById(R.id.cancelButton);
 			cancelButton.setOnClickListener(new OnClickListener() {
 				
@@ -232,6 +247,7 @@ public class ReportMap extends MapTester implements OnMarkerDragListener {
 				}
 			});
 			
+			//giving the picture button some functionality
 			pictureButton = (Button)view.findViewById(R.id.pictureButton);
 			pictureButton.setOnClickListener(new OnClickListener() {
 				
@@ -266,51 +282,9 @@ public class ReportMap extends MapTester implements OnMarkerDragListener {
 		        //this line of code returns the image that was just taken and saves it as a bitmap
 		        //here is probably a good place to save the image to the database
 		        Bitmap imageBitmap = (Bitmap) extras.get("data");
-		        mImageView.setImageBitmap(imageBitmap);
+		        activity.setImage(imageBitmap);
 		    }
 
 		}
-
-		
-		
-		/*/**
-		 * This method will take a quick picture using the device's camera
-		 * the photo is saved to the local storage of the android phone.
-		 */
-		/*public void takePicture(){
-			Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-			startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
-			
-			File photoFile = null;
-			try{
-				photoFile = createImageFile();
-			}catch(IOException e){
-				Toast.makeText(getActivity(), "error while creating the file", 0).show();
-			}
-			
-			if(photoFile != null){
-				intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
-	            startActivityForResult(intent, REQUEST_TAKE_PHOTO);
-			}
-		}*/
-		
-		
-		/*/**
-		 * this method is used to store the image that is taken by the quick camera from the app 
-		 * @return a File object
-		 * @throws IOException
-		 */
-		/*private File createImageFile() throws IOException {
-			// TODO Auto-generated method stub
-			String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-			String imageFileName = "JPEG_"+timeStamp+ "_";
-			
-			File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-			
-			File image = File.createTempFile(imageFileName, ".jpg", storageDir);
-		
-			mCurrentPath = "file:" + image.getAbsolutePath();
-			return image;
-		}*/
 	}
 }
