@@ -4,23 +4,16 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+/**
+ * @author group 1
+ * The EmergencyContactButton class is used to make a phone call
+ * when the user clicks on the Emergency Call button. This is done
+ * through intents.
+ */
 public class EmergencyContactButton extends Activity{
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState);
-	}
-	
-	@Override
-	protected void onStart() {
-		// TODO Auto-generated method stub
-		super.onStart();
-	}
 	
 	@Override
 	protected void onResume() {
@@ -29,6 +22,7 @@ public class EmergencyContactButton extends Activity{
 		
 		//making a phone intent
 		Intent phoneIntent = new Intent(Intent.ACTION_DIAL);
+		//passing the number to be dialed
 		phoneIntent.setData(Uri.parse("tel:786-412-5915"));
 		
 		try{
@@ -41,23 +35,4 @@ public class EmergencyContactButton extends Activity{
 			ex.printStackTrace();
 		}
 	}
-	
-	@Override
-	protected void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
-	}
-	
-	@Override
-	protected void onStop() {
-		// TODO Auto-generated method stub
-		super.onStop();
-	}
-	
-	@Override
-	protected void onDestroy() {
-		// TODO Auto-generated method stub
-		super.onDestroy();
-	}
-
 }

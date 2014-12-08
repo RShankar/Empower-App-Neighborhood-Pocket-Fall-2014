@@ -4,22 +4,14 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
+/**
+ * @author group 1
+ * This class uses intents to have the device's phone module dial 911.
+ * It is left to the user to place the call.
+ */
 public class PoliceButton extends Activity {
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState);
-	}
-	
-	@Override
-	protected void onStart() {
-		// TODO Auto-generated method stub
-		super.onStart();
-	}
 	
 	@Override
 	protected void onResume() {
@@ -33,7 +25,6 @@ public class PoliceButton extends Activity {
 		try{
 			startActivity(phoneIntent);
 			finish();
-			Log.i("finished making the phone call","");
 		}
 		catch(ActivityNotFoundException ex){
 			Toast.makeText(getApplicationContext(), "call failed", Toast.LENGTH_LONG).show();
@@ -41,19 +32,4 @@ public class PoliceButton extends Activity {
 		}
 		
 	}
-	
-	@Override
-	protected void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
-	}
-	
-	@Override
-	protected void onDestroy() {
-		// TODO Auto-generated method stub
-		super.onDestroy();
-	}
-	
-	
-
 }

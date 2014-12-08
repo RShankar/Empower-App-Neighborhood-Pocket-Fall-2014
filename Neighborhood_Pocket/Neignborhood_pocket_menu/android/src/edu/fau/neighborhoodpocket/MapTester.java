@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import processing.test.neignborhood_pocket_menu.R;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,12 +23,17 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-//you do not need a constructor in an Activity
-
-public class MapTester extends Activity implements Communicator {
+import com.parse.ParseObject;
 
 
+/**
+ * @author group1
+ * The MapTester class is the class used to display a Google Map fragment.
+ * It is also the parent class to ReportMap. The listView object, the listView
+ * adapter, and all listeners associated with the listView, are written in this class.
+ */
+@SuppressLint("UseSparseArrays")
+public class MapTester extends Activity {
 	//map object
 	protected GoogleMap map;
 	//lat, long information
@@ -36,68 +42,46 @@ public class MapTester extends Activity implements Communicator {
 	//the listview object that connects with the list view object on the map
 	protected ListView newsFeed;
 	//adapter to write to the list
-	
 	protected ArrayAdapter<String> newsFeedAdapter;
-	static public ArrayList<String> listItems;
+    public static ArrayList<ParseObject> listItems = new ArrayList<ParseObject>();
 	//hashmap made of SuspiciousActivity objects
 	//the position in the listView will be the key of the suspicious activity
 	public static HashMap<Integer, SuspiciousActivity> activityMap = 
 			new HashMap<Integer, SuspiciousActivity>();
-	
-	/* (non-Javadoc)
-	 * @see android.app.Activity#onCreate(android.os.Bundle)
-	 */
+	//parse object that will be used to add information to the database
+	protected ParseObject suspiciousActivity = new ParseObject("SuspiciousActivity");	
+
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map);
-        //test data
-        
-        LatLng loc1 = new LatLng(25.645021, -80.339531); //location for the Falls
-        LatLng loc2 = new LatLng(25.686673, -80.365918); //location for the Publix
-        SuspiciousActivity act1 = new SuspiciousActivity(getApplicationContext(), loc1);
-        SuspiciousActivity act2 = new SuspiciousActivity(getApplicationContext(), loc2);
-        activityMap.put(0, act1);
-        activityMap.put(1, act2);
         
         //these are the current coordinates that are taken from Processing menu class
         latitude = this.getIntent().getExtras().getDouble("latitude");
         longitude = this.getIntent().getExtras().getDouble("longitude");
         
+        //the list adapter object
         newsFeedAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_activated_1,0);
-  		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.fragment1)).getMap();
+  		
+        //getting the map fragment
+        map = ((MapFragment) getFragmentManager().findFragmentById(R.id.fragment1)).getMap();
   		//getting the location your at
   		initialLocation = new LatLng(latitude, longitude);
   		
   		//initializing the news feed
   		newsFeed = (ListView)findViewById(R.id.listView1);
   		newsFeed.setAdapter(newsFeedAdapter);
-  		if(savedInstanceState != null){
-  			listItems = savedInstanceState.getStringArrayList("list");
-  		}
   		
+  		//checking to see if the HashMap has any objects
   		if(!activityMap.isEmpty()){
   			for(int i = 0; i < activityMap.size(); i++)
   				newsFeedAdapter.add(activityMap.get(i).getTitle());
   		}
   		initMap();
 	}
-	
-	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onRestoreInstanceState(savedInstanceState);
-		listItems = savedInstanceState.getStringArrayList("list");
-	}
-	 
-	 @Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-		
-	}
 
 	/**
-	 * Method to setup correct camera position over the map
+	 * Method to setup correct camera position over the map and add markers
+	 * indicating the location of all reported suspicious activity
 	 */
 	protected void initMap() {
 		//moving the camera to the location of the user
@@ -112,6 +96,7 @@ public class MapTester extends Activity implements Communicator {
   			
   		}
 		
+		//listView onclick listener
 		newsFeed.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -141,8 +126,6 @@ public class MapTester extends Activity implements Communicator {
 					newsFeed.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 					newsFeed.setItemChecked(position, true);
 				}
-					
-					
 				return true;
 			}
 		});
@@ -159,16 +142,7 @@ public class MapTester extends Activity implements Communicator {
 		Intent intent = new Intent(this, ActivityDisplay.class);
 		//just passing position
 		intent.putExtra("position", position);
-
 	    startActivity(intent);
-	}
-
-	@Override
-	protected void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
-	
-		
 	}
 	
 	/**
@@ -184,22 +158,4 @@ public class MapTester extends Activity implements Communicator {
 	protected String getLongitude(){
 		return String.valueOf(longitude);
 	}
-	
-
-
-	@Override
-	public void onDialogMessage(String message) {
-		// TODO Auto-generated method stub
-		newsFeedAdapter.add(message);
-		listItems.add(message);
-	}
-	
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		// TODO Auto-generated method stub
-		super.onSaveInstanceState(outState);
-	
-		outState.putStringArrayList("list", listItems);
-	}	
-
 }

@@ -1,5 +1,6 @@
 package edu.fau.neighborhoodpocket;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
 
 import processing.test.neignborhood_pocket_menu.R;
@@ -12,11 +13,13 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -24,13 +27,27 @@ import com.google.android.gms.maps.GoogleMap.OnMarkerDragListener;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
+/**
+ * @author Group1
+ * This class inherits from the MapTester class. This class contains three inner classes
+ * to display dialogs to interact with the user. Updating the Parse database is also handled
+ * by this class. 
+ *
+ */
 public class ReportMap extends MapTester implements OnMarkerDragListener {
 	
 	//marker variable that will be draggable
 	private Marker mark;
 	private String userResponse = null;
 	private LatLng newPosition;
+	private String objectId = null;
 	
 	
 	@Override
@@ -41,6 +58,8 @@ public class ReportMap extends MapTester implements OnMarkerDragListener {
 		newPosition = initialLocation;
 	}	
 	
+		
+		
 	/**
 	 * Method that will place a marker on the map at the user's current position
 	 */
@@ -62,9 +81,7 @@ public class ReportMap extends MapTester implements OnMarkerDragListener {
 		DescriptionDialog dialog = new DescriptionDialog();
 		dialog.show(manager, "testDialog");
 	}
-
-
-
+	
 	@Override
 	public void onMarkerDrag(Marker marker) {
 		// TODO Auto-generated method stub
@@ -79,7 +96,36 @@ public class ReportMap extends MapTester implements OnMarkerDragListener {
 		
 		//setting the new position of the newly dragged marker to the correct suspcious activity
 		activityMap.get(activityMap.size()-1).setPosition(newPosition);
+		
+		//function update the database
+		updateDatadase(newPosition);
 	}
+
+	/**
+	 * @param position
+	 * This method will update the Parse database if the marker is dragged by a user, which effecitively
+	 * changes the latitude and longitude coordinates of the position.
+	 */
+	private void updateDatadase(final LatLng position) {
+		
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("SuspiciousActivity");
+		query.getInBackground(objectId, new GetCallback<ParseObject>() {
+			
+			@Override
+			public void done(ParseObject arg0, ParseException arg1) {
+				if (arg1 == null) {
+				      // Now let's update it with some new data.
+					suspiciousActivity.put("latitude", position.latitude);
+					suspiciousActivity.put("longitude", position.longitude);
+					suspiciousActivity.saveInBackground();
+				}
+				
+			}
+		});
+		
+	}
+
+
 
 	@Override
 	public void onMarkerDragStart(Marker marker) {
@@ -87,18 +133,13 @@ public class ReportMap extends MapTester implements OnMarkerDragListener {
 		
 	}
 	
-	@Override
-	public void onDialogMessage(String message) {
-		// TODO Auto-generated method stub
-		userResponse = message;	
-	}
 	
 	//inner class
 	/**
 	 * This class contains all the code for the first Dialog screen seen when the user 
 	 * first clicks on the Report button from the menu screen.
 	 * This class inherits from DialogFragment
-	 * @author Joey
+	 * @author group1
 	 *
 	 */
 	public class DescriptionDialog extends DialogFragment {
@@ -144,8 +185,9 @@ public class ReportMap extends MapTester implements OnMarkerDragListener {
 	/**
 	 * This class provides the code for the dialog that appears when the
 	 * user wants to make an anonymous post.
-	 * This class inherits from DescriptionDialog class
-	 * @author Joey
+	 * This class inherits from DescriptionDialog class. Data is uploaded to the 
+	 * Parse database in this class as well.
+	 * @author group1
 	 *
 	 */
 	public class AnonymousAddDialog extends DescriptionDialog{
@@ -169,12 +211,46 @@ public class ReportMap extends MapTester implements OnMarkerDragListener {
 				public void onClick(DialogInterface dialog, int which) {
 					dismiss();
 					Calendar c = Calendar.getInstance();
-					//adding a new SuspiciousActivity	
+					//adding a new SuspiciousActivity
 					SuspiciousActivity act = new SuspiciousActivity(getApplicationContext(), newPosition);
 					initMapMarker();
 					activityMap.put(newsFeedAdapter.getCount(), act);
 					newsFeedAdapter.add(act.getTitle());
 					
+					//adding to the Parse database
+					suspiciousActivity.put("description", act.getDescription());
+					suspiciousActivity.put("latitude", act.getCoordinates().latitude);
+					suspiciousActivity.put("longitude", act.getCoordinates().longitude);
+					suspiciousActivity.put("date", act.getDate());
+					
+					//working with the Bitmap
+					Bitmap image = act.getBitmap();
+					ByteArrayOutputStream stream = new ByteArrayOutputStream();
+					image.compress(Bitmap.CompressFormat.PNG, 100, stream);
+					byte[] byteArray = stream.toByteArray();
+					ParseFile file = new ParseFile("image.png", byteArray);
+					
+					//adding the Bitmap
+					suspiciousActivity.put("image", file);
+					
+					//saving use callBack to get the correct ID for updates
+					suspiciousActivity.saveInBackground(new SaveCallback() {
+						
+						@Override
+						public void done(ParseException arg0) {
+							// TODO Auto-generated method stub
+							if(arg0==null){
+								//we're good
+								objectId = suspiciousActivity.getObjectId();
+								Log.d("Check PARSE", "The object Id is: " + objectId);
+							}
+							else{
+								Toast.makeText(getApplicationContext(), "Something went wrong retrieving the object ID",
+										Toast.LENGTH_LONG).show();
+							}
+							
+						}
+					});
 				}
 			});
 			
@@ -186,8 +262,9 @@ public class ReportMap extends MapTester implements OnMarkerDragListener {
 	
 	/**
 	 * This is the class that implements the code for the dialog that the user can enter 
-	 * a custom description of the custom activity
-	 * @author Joey
+	 * a custom description of the custom activity. Data is uploaded to the 
+	 * Parse database in this class as well.
+	 * @author group1
 	 *
 	 */
 	public class DescriptionTextDialog extends DialogFragment{
@@ -233,6 +310,41 @@ public class ReportMap extends MapTester implements OnMarkerDragListener {
 					newsFeedAdapter.add(activity.getTitle());
 					initMapMarker();
 					dialog.dismiss();
+					
+					//adding new activity to the database
+					suspiciousActivity.put("description", activity.getDescription());
+					suspiciousActivity.put("latitude", activity.getCoordinates().latitude);
+					suspiciousActivity.put("longitude", activity.getCoordinates().longitude);
+					suspiciousActivity.put("date", activity.getDate());
+					
+					//working with the Bitmap
+					Bitmap image = activity.getBitmap();
+					ByteArrayOutputStream stream = new ByteArrayOutputStream();
+					image.compress(Bitmap.CompressFormat.PNG, 100, stream);
+					byte[] byteArray = stream.toByteArray();
+					ParseFile file = new ParseFile("image.png", byteArray);
+					
+					//adding the Bitmap
+					suspiciousActivity.put("image", file);
+					suspiciousActivity.saveInBackground(new SaveCallback() {
+						
+						@Override
+						public void done(ParseException arg0) {
+							// TODO Auto-generated method stub
+							if(arg0==null){
+								//we're good
+								objectId = suspiciousActivity.getObjectId();
+								Log.d("Check PARSE", "The object Id is: " + objectId);
+							}
+							else{
+								Toast.makeText(getApplicationContext(), "Something went wrong retrieving the object ID",
+										Toast.LENGTH_LONG).show();
+							}
+							
+						}
+					});
+					
+					
 				}
 			});
 			
@@ -269,12 +381,6 @@ public class ReportMap extends MapTester implements OnMarkerDragListener {
 			startActivityForResult(intent,REQUEST_IMAGE_CAPTURE);
 		}
 		
-		/* 
-		 * This method will retrieve the image that has just been taken by the camera, and return it 
-		 * as a bitmp image
-		 * (non-Javadoc)
-		 * @see android.app.Fragment#onActivityResult(int, int, android.content.Intent)
-		 */
 		@Override
 		public void onActivityResult(int requestCode, int resultCode, Intent data) {
 			if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {

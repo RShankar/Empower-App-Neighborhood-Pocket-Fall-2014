@@ -38,16 +38,26 @@
          
         android:icon="@drawable/icon" 
         android:label="Neignborhood_pocket_menu">
-        <activity android:name="edu.fau.neighborhoodpocket.Neignborhood_pocket_menu">
+        <activity android:name="edu.fau.neighborhoodpocket.Neignborhood_pocket_menu"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
                 </intent-filter>
                 
         </activity>
-        <activity android:name="edu.fau.neighborhoodpocket.MapTester"></activity>
-        <activity android:name="edu.fau.neighborhoodpocket.PoliceButton"></activity>
-        <activity android:name="edu.fau.neighborhoodpocket.EmergencyContactButton"></activity>
+        
+        <activity android:name="edu.fau.neighborhoodpocket.MapTester"
+            android:screenOrientation="portrait">
+        </activity>
+        
+        <activity android:name="edu.fau.neighborhoodpocket.PoliceButton"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name="edu.fau.neighborhoodpocket.EmergencyContactButton"
+            android:screenOrientation="portrait">
+            
+        </activity>
         
         <meta-data android:name="com.google.android.gms.version"
         android:value="@integer/google_play_services_version" />
@@ -55,7 +65,9 @@
         <meta-data
     	android:name="com.google.android.maps.v2.API_KEY"
     	android:value="AIzaSyDt-9gzwTNWPlUe7rzXzyOFTsczs9FRFcw"/>
-        <activity android:name="edu.fau.neighborhoodpocket.ReportMap"></activity>
+        <activity android:name="edu.fau.neighborhoodpocket.ReportMap"
+            android:screenOrientation="portrait"
+            ></activity>
         <activity android:name="edu.fau.neighborhoodpocket.ActivityDisplay"></activity>
        
                 
