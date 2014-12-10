@@ -88,7 +88,7 @@ public class Neighborhood_pocket_menu extends PApplet {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-			        	
+			        	//placing items from database into Hashmap
 			        	MapTester.activityMap.put(i, act);
 			        }
 				}

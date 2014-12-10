@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -68,8 +69,10 @@ public class MapTester extends Activity {
 	protected Circle circle = null;
 	
 	//Button for the filter
-	private Button filterButton;
+	protected Button filterButton;
 	
+	//variable for the textveiw
+	protected TextView name;
 	//values for filter
 	protected int startYear = -1, 
 			startMonth = -1, 
@@ -83,7 +86,8 @@ public class MapTester extends Activity {
         setContentView(R.layout.map);
         //getting the filter button
         filterButton = (Button)findViewById(R.id.buttonFilter);
-        
+        //gettign the textView
+        name = (TextView)findViewById(R.id.textView1);
         //setting the listener
         filterButton.setOnClickListener(new OnClickListener() {
 			
@@ -126,6 +130,7 @@ public class MapTester extends Activity {
 	 * indicating the location of all reported suspicious activity
 	 */
 	protected void initMap() {
+		Toast.makeText(getApplicationContext(), "Long-click News Feed Item to see Description", Toast.LENGTH_LONG).show();
 		//moving the camera to the location of the user
 		CameraUpdate initialUpdate = CameraUpdateFactory.newLatLngZoom(initialLocation,15);
 		map.animateCamera(initialUpdate);
@@ -152,7 +157,7 @@ public class MapTester extends Activity {
 				map.animateCamera(update);
 				
 				//adding a circle around the marker
-				CircleOptions co = new CircleOptions().center(activityMap.get(position).getCoordinates()).radius(20);
+				CircleOptions co = new CircleOptions().center(activityMap.get(position).getCoordinates()).radius(15);
 				circle = map.addCircle(co);
 				circle.setCenter(activityMap.get(position).getCoordinates());
 				}
