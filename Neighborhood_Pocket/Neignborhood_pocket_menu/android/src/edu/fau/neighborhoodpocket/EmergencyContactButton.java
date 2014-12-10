@@ -23,7 +23,7 @@ public class EmergencyContactButton extends Activity{
 		//making a phone intent
 		Intent phoneIntent = new Intent(Intent.ACTION_DIAL);
 		//passing the number to be dialed
-		phoneIntent.setData(Uri.parse("tel:786-412-5915"));
+		//phoneIntent.setData(Uri.parse("tel:786-412-5915"));
 		
 		try{
 			startActivity(phoneIntent);

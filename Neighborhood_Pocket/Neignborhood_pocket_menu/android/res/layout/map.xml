@@ -10,6 +10,13 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.52" />
 
+    <Button
+        android:id="@+id/buttonFilter"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Filter" />
+
     <ListView
         android:id="@+id/listView1"
         android:layout_width="match_parent"

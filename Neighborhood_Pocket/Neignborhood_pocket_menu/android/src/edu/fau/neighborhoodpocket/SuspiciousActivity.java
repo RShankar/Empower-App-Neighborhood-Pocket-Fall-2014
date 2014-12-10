@@ -132,8 +132,12 @@ public class SuspiciousActivity {
 	 * This method will set the timestamp for the SuspiciousActivity.
 	 */
 	public void setDate(Date d){
-		
 		serverDate = d;
+		date.setTime(d);
+	}
+	
+	public Calendar getCalendar(){
+		return date;
 	}
 
 }

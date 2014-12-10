@@ -36,14 +36,12 @@
     
     <application 
          
-        android:icon="@drawable/icon" 
-        android:label="Neignborhood_pocket_menu">
-        <activity android:name="edu.fau.neighborhoodpocket.Neignborhood_pocket_menu"
+        
+        android:icon="@drawable/ic_launcher" 
+        android:label="Neighborhood Pocket">
+        <activity android:name="edu.fau.neighborhoodpocket.Neighborhood_pocket_menu"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-                </intent-filter>
+            
                 
         </activity>
         
@@ -69,6 +67,15 @@
             android:screenOrientation="portrait"
             ></activity>
         <activity android:name="edu.fau.neighborhoodpocket.ActivityDisplay"></activity>
+        <activity android:name="edu.fau.neighborhoodpocket.NP_splash_screen1"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+                </intent-filter>
+        </activity>
+        <activity android:name="edu.fau.neighborhoodpocket.NP_instruction_screen1"></activity>
+        
        
                 
     </application>
